@@ -68,7 +68,7 @@ namespace rrobot {
              * @brief called by factory to perform initial deserialization of inbound message. Evoked by
              * factory which perform the conversion to inbound message that can be processed.
              */
-            uint8_t* deserialize(uint8*);
+            uint8_t* deserialize(uint8_t *);
 
             /**
              * @fn setDirection
@@ -101,7 +101,7 @@ namespace rrobot {
                  * @fn calculateChecksum
                  * @brief calculate the checksum, and append it to message.
                  */
-                void calculateChecksum();
+                uint8_t calculateChecksum();
     };
 }
 
