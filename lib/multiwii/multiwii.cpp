@@ -3,12 +3,26 @@
 using namespace rrobot;
 using namespace std;
 
-void MultiWii::calculateChecksum() {
-    _mspPackage.checksum = _mspPackage.size ^ static_cast<uint8_t>(_mspPackage.type);
+
+/**
+ * When serializing message it should always be considered outbound.
+ */
+uint8_t* MultiWii::serialize(MspCommands type, uint8_t size, uint8_t *payload) {
+    _mspPackage.type = type;
+    setDirection(Direction_t::outbound);
+    setPayload(payload, size);
+    _mspPackage.checksum = calculateChecksum();
+
+    return reinterpret_cast<uint8_t*>(&_mspPackage);
+}
+
+uint8_t MultiWii::calculateChecksum() {
+    uint8_t checksum = _mspPackage.size ^ static_cast<uint8_t>(_mspPackage.type);
     for (int i = 0; i < _mspPackage.size; i++) {
         uint8_t byte = _mspPackage.payload[i];
-        _mspPackage.checksum ^= byte;
+        checksum ^= byte;
     }
+    return checksum;
 }
 
 void MultiWii::setPayload(uint8_t* payload, uint8_t size) {
