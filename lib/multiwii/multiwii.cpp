@@ -3,6 +3,12 @@
 using namespace rrobot;
 using namespace std;
 
+
+// Not much needs doing,  just free the payload
+ MultiWii::~MultiWii() {
+    free(_payload);
+ }
+
 /**
  * Using traditional methods for malloc, this is because Arduino malloc is not the
  * same as other implementations, and while it should work,  lets not risk it.
