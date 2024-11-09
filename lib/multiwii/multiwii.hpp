@@ -34,6 +34,9 @@ enum class Direction_t : char {
  */
 class MultiWii {
    public:
+
+    ~MultiWii();
+
     /**
      * @fn serialize
      * @brief serializes outbound messages, and sets all getters and setters.
@@ -81,7 +84,7 @@ class MultiWii {
     Direction_t _direction;
     uint8_t _size;
     MspCommands _type;
-    uint8_t *_payload;
+    uint8_t *_payload = NULL;
     uint8_t _checksum;
 
     // Size of package excluding payload
