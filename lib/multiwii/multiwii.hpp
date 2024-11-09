@@ -12,96 +12,86 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 #include "commands.hpp"
 
 using namespace std;
 
-namespace rrobot {
+namespace rrobot
+{
 
-    enum class Direction_t : char {
-        inbound  = '<',
+    enum class Direction_t : char
+    {
+        inbound = '<',
         outbound = '>',
     };
-
-    // standard MSP package.
-    struct MspPackage_t {
-        char*     hdr;
-        Direction_t  direction;
-        uint8_t      size;
-        MspCommands  type;
-        uint8_t*     payload;
-        uint8_t      checksum;
-
-        MspPackage_t() : hdr(preamble) {}
-
-        static constexpr char* preamble = "$M";
-    };
-
-    // // 
-    // struct MspStatusPayload {
-    //     uint16_t cycleTime;
-    //     uint16_t i2cErrors;
-    //     uint16_t sensors;
-    //     uint32_t flags;
-    //     uint8_t  currentSet;
-    // };
 
     /**
      * @class MultiWii
      * @brief base class for MSP commands, this class should not be invoked directly.  It is used
      * as part of MSP commands. For serialization and desialization of ingress, and egress messages.
      */
-    class MultiWii {
-        public:
+    class MultiWii
+    {
+    public:
+        /**
+         * @fn serialize
+         * @brief serializes outbound messages, and sets all getters and setters.
+         * @param command MSP command to send.
+         * @param size size in bytes of payload.
+         * @param payload payload to send.
+         */
+        uint8_t *serialize(MspCommands, uint8_t size, uint8_t *payload);
 
-            /**
-             * @fn serialize
-             * @brief serializes outbound messages, and sets all getters and setters.
-             * @param command MSP command to send.
-             * @param size size in bytes of payload.
-             * @param payload payload to send.
-             */
-            uint8_t* serialize(MspCommands, uint8_t size, uint8_t *payload);
-            
-            /**
-             * @fn deserialize
-             * @brief called by factory to perform initial deserialization of inbound message. Evoked by
-             * factory which perform the conversion to inbound message that can be processed.
-             */
-            uint8_t* deserialize(uint8_t *);
+        /**
+         * @fn deserialize
+         * @brief called by factory to perform initial deserialization of inbound message. Evoked by
+         * factory which perform the conversion to inbound message that can be processed.
+         */
+        uint8_t *deserialize(uint8_t *);
 
-            /**
-             * @fn setDirection
-             * @brief sets either inbound or outbound direction of message.
-             * @brief direction
-             */
-            void setDirection(Direction_t);
-            Direction_t getDirection();
+        /**
+         * @fn setDirection
+         * @brief sets either inbound or outbound direction of message.
+         * @brief direction
+         */
+        void setDirection(Direction_t);
+        Direction_t getDirection();
 
-            /**
-             * @fn setType
-             * @brief sets command.
-             */
-            void setType(MspCommands);
-            MspCommands getType();
+        /**
+         * @fn setType
+         * @brief sets command.
+         */
+        void setType(MspCommands);
+        MspCommands getType();
 
-            /**
-             * @fn setPayload
-             * @brief set the payload
-             * @param payload the payload to attach
-             * @param size size of the payload.
-             */
-            void setPayload(uint8_t*, uint8_t);
-            uint8_t* getPayload();
+        /**
+         * @fn setPayload
+         * @brief set the payload
+         * @param payload the payload to attach
+         * @param size size of the payload.
+         */
+        void setPayload(uint8_t *, uint8_t);
+        uint8_t *getPayload();
 
-        private:
-             struct MspPackage_t _mspPackage;
+    private:
+        // struct MspPackage_t _mspPackage;
 
-                 /**
-                 * @fn calculateChecksum
-                 * @brief calculate the checksum, and append it to message.
-                 */
-                uint8_t calculateChecksum();
+        const char* _hdr  = "$M";
+        Direction_t _direction;
+        uint8_t     _size;
+        MspCommands _type;
+        uint8_t*    _payload;
+        uint8_t     _checksum;
+
+        // Size of package excluding payload
+        const int pkgOffset = 6;
+
+        /**
+         * @fn calculateChecksum
+         * @brief calculate the checksum, and append it to message.
+         */
+        uint8_t calculateChecksum();
     };
 }
 
