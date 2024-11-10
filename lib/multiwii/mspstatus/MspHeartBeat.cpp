@@ -7,7 +7,11 @@
 using namespace rrobot;
 using namespace std;
 
-constexpr size_t PAYLOAD_SZ = (sizeof(uint8_t) * 5) + sizeof(uint32_t);
+static constexpr size_t PAYLOAD_SZ = (sizeof(uint8_t) * 5) + sizeof(uint32_t);
+
+size_t MspHeartBeat::getPacketSz() {
+    return PAYLOAD_SZ + MultiWii::pkgOffset;
+}
 
 uint8_t* MspHeartBeat::serialize() {
     uint8_t* payload = reinterpret_cast<uint8_t *>(malloc(PAYLOAD_SZ));

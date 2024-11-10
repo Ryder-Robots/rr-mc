@@ -34,6 +34,8 @@ class MspHeartBeat {
         _system_status(system_status) {}
     ~MspHeartBeat() {}
 
+    size_t getPacketSz();
+
     /**
      * @fn serialize
      * @brief serialize request.
