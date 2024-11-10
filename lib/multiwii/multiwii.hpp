@@ -2,12 +2,14 @@
 #define MULTIWII_HPP
 
 /**
- * MSP message have the following structure:
+ * @brief  message have the following structure:
  *    Header (3 bytes) (ASCII)
  *    Size (1 byte)
  *    Type (1 byte)
  *    Data payload (variable length)
  *    Checksum (1 byte)
+ * 
+ * refer to http://www.multiwii.com/wiki/index.php?title=Multiwii_Serial_Protocol
  */
 
 #include <stdint.h>
