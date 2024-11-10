@@ -79,6 +79,9 @@ class MultiWii {
     void setPayload(uint8_t *, uint8_t);
     uint8_t *getPayload();
 
+    // Size of package excluding payload
+    static const int pkgOffset = 6;
+
    private:
     // struct MspPackage_t _mspPackage;
 
@@ -89,8 +92,7 @@ class MultiWii {
     uint8_t *_payload = NULL;
     uint8_t _checksum;
 
-    // Size of package excluding payload
-    const int pkgOffset = 6;
+
 
     /**
      * @fn calculateChecksum
