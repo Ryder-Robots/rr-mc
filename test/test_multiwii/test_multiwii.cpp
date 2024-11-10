@@ -2,7 +2,9 @@
 #include <string.h>
 #include <unity.h>
 
-#include "multiwii.hpp"
+#include <multiwii.hpp>
+#include <mspstatus/MspHeartBeat.hpp>
+
 
 using namespace rrobot;
 
@@ -80,20 +82,34 @@ void test_desialization(void) {
     free(ingres);
 }
 
+
+void test_serialize_heartbeat(void) {
+    MspHeartBeat heartBeat = MspHeartBeat(MavMode::MAV_MODE_PREFLIGHT, 0, MavState::MAV_STATE_STANDBY);
+    uint8_t* packet = heartBeat.serialize();
+
+    TEST_ASSERT_EQUAL('$', static_cast<char>(packet[0]));
+    TEST_ASSERT_EQUAL('M', static_cast<char>(packet[1]));
+    TEST_ASSERT_EQUAL('>', static_cast<char>(packet[2]));
+    TEST_ASSERT_EQUAL((sizeof(uint8_t) * 5) + sizeof(uint32_t), static_cast<int>(packet[3]));
+    TEST_ASSERT_EQUAL(MspCommands::MSP_STATUS, static_cast<uint8_t>(packet[4]));
+    TEST_ASSERT_EQUAL(MAV_TYPE_GROUND_ROVER, static_cast<MavType>(packet[5]));
+    TEST_ASSERT_EQUAL(MAV_AUTOPILOT_INVALID, static_cast<MavAutoPilot>(packet[6]));
+    TEST_ASSERT_EQUAL(MAV_MODE_PREFLIGHT, static_cast<MavMode>(packet[7]));
+    TEST_ASSERT_EQUAL(MAV_STATE_STANDBY, static_cast<MavState>(packet[12]));
+}
+
 void setup() {
-    delay(2000);
+    delay(1000);
 
     UNITY_BEGIN();
     RUN_TEST(test_methods);
     RUN_TEST(test_packet);
     RUN_TEST(test_desialization);
+    RUN_TEST(test_serialize_heartbeat);
     UNITY_END();
 }
 
 void loop() {
     UNITY_BEGIN();
-    RUN_TEST(test_methods);
-    RUN_TEST(test_packet);
-    RUN_TEST(test_desialization);
     UNITY_END();
 }

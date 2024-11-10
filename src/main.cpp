@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <stdint.h>
 #include "multiwii.hpp"
+#include <mspstatus/MspHeartBeat.hpp>
 
 
 // UART mySerial1(digitalPinToPinName(4), digitalPinToPinName(3), NC, NC);
