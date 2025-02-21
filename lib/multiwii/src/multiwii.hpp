@@ -4,6 +4,7 @@
 // The following libraries should be defined in a macro at build time.
 #include <Arduino.h>
 #include <Ethernet.h>
+#include <utility/w5100.h>
 
 #include <stdint.h>
 
@@ -50,11 +51,11 @@ namespace rrobot {
 
         private:
             const char  _preamble[2] = {'$', 'M'};
-            RrDirection _direction = MWC_FROM;
+            RrDirection _direction = RrDirection::MWC_FROM;
 
             // uint16_t number but must be stored as MSB this is done using htons
             uint16_t     _size     = 0;
-            RrCommand    _command  = MSP_STATUS;
+            RrCommand    _command  = RrCommand::MSP_STATUS;
             uint8_t*     _data      = nullptr;
 
             //checksum

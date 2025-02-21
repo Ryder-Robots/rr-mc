@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <multiwii.hpp>
 
 /**
  * 
@@ -10,7 +11,7 @@ int myFunction(int, int);
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  //int result = myFunction(2, 3);
 }
 
 void loop() {
