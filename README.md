@@ -10,7 +10,7 @@ Firmware software for RR Robot Fat Controller
 - size = number of data bytes, binary. Can be zero as in the case of a data request to the MWC
 - command = message_id as per the table below
 - data = as per the table below. UINT16 values are MSB first.
-- crc = XOR of <size>, <command> and each data byte into a zero'ed sum
+- crc = XOR of each data byte into a zero'ed sum, the remainder should be 0, otherwise data may be corrupted. Note tthat unlike multiwii protocol, size, and command are not added to CRC,  as data should always a precise for a precise command this should be indicated by checking size() and command().    
 
 
 # Reference

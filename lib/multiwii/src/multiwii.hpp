@@ -3,66 +3,110 @@
 
 // The following libraries should be defined in a macro at build time.
 #include <Arduino.h>
-#include <Ethernet.h>
-#include <utility/w5100.h>
-
 #include <stdint.h>
+#include <encoder.hpp>
+#include <crc.hpp>
 
 namespace rrobot {
-
-    /**
-     * @class RrDirection
-     * @brief
-     * Direction on request
-     */
-    enum class RrDirection : char {
-        MWC_TO    = '<',
-        MWC_FROM  = '>',
-        MWC_ERROR = '!'
-    };
-
-    enum class RrCommand : uint8_t {
-        MSP_STATUS = 101,
-        MSP_GYRO   = 216,
-    };
 
     /**
      * @class RrMultiWii
      * @brief
      * MultiWii data structure.
      */
+    template <class T>
     class RrMultiWii {
         public:
-            RrMultiWii(RrDirection direction, uint16_t size, RrCommand command, uint8_t* data):
-                _direction(direction),
-                _size(htons(size)),
-                _command(command),
+            RrMultiWii(RrEnecoder<T> encoder, Crc32 crc32):
+                _encoder(encoder), _crc32(crc32) {}
 
-                // ensure that anything that has a word size larger than uint8_t is encoded using htons
-                _data(data) {}
-
-            uint8_t* encode();
-            void     decode(uint8_t* data);
-
+            /**
+             * @fn getDirection
+             * @brief
+             * returns direction of data.
+             */
             RrDirection getDirection() {return _direction;}
-            uint16_t    getSize() {return ntohs(_size);}
-            RrCommand   getCommand() {return _command;}
-            uint8_t*    getData() {return _data;}
+
+            /**
+             * @fn getSize
+             * @brief
+             * return size of data in bytes
+             */
+            uint16_t    getSize() {return _encoder.getSize();}
+            
+            /**
+             * @fn encode
+             * @brief
+             * given data of type T encode it to packet that can be transmitted through serial port.
+             * 
+             * By default this also sets the direction to outbound.
+             */
+            uint8_t*    encode(T data) {
+                uint8_t* out = _encoder->encode(data);
+                uint8_t* packet = malloc(
+                    sizeof(_preamble) + sizeof(_direction) + _encoder->getSize() +
+                    sizeof(uint32_t) + sizeof(_termination)
+                );
+
+                int i = 0;
+                for (char c : _preamble) {
+                    packet[i++] = c;
+                }
+
+                if (_encoder->getSize() != 0) {
+                    uint16_t sz = htons(_encoder->getSize());
+                    packet[i++] =  (sz >> 8) & 0xFF;
+                    packet[i++] = sz & 0xFF;
+                    packet[i++] = _encoder->getCommand() & 0xFF;
+
+                    const uint8_t* encoded =  _encoder->encode();
+                    for (uint8_t c : encoded) {
+                        packet[i++] = c;
+                    }
+
+                    // CRC check goes here.
+                    uint32_t crc = htonl(_crc32.calculate(encoded, _encoder->getSize()));
+                    packet[i++] = (crc >> 24) & 0xFF;
+                    packet[i++] = (crc >> 16) & 0xFF;
+                    packet[i++] = (crc >> 8) & 0xFF;
+                    packet[i++] = crc & 0xFF;
+                } else {
+                    // CRC and size are both set to 0
+                    packet[i++] = 0 & 0xFF;
+                    packet[i++] = 0 & 0xFF;
+                    packet[i++] = _encoder->getCommand() & 0xFF;
+                    packet[i++] = 0 & 0xFF;    
+                    packet[i++] = 0 & 0xFF;
+                    packet[i++] = 0 & 0xFF;
+                    packet[i++] = 0 & 0xFF;    
+                }
+
+                packet[i] = _termination & 0xFF;
+                return packet;
+            }
+
+
+            /**
+             * @fn decode
+             * @brief
+             * Given network packet decode it, and set internal variables.
+             */
+            T decode(uint8_t* data);
+
+            /**
+             * @fn reset
+             * @brief
+             * resets command.
+             */
+            void reset() {_direction = RrDirection::MWC_ERROR;}
+
 
         private:
             const char  _preamble[2] = {'$', 'M'};
-            RrDirection _direction = RrDirection::MWC_FROM;
-
-            // uint16_t number but must be stored as MSB this is done using htons
-            uint16_t     _size     = 0;
-            RrCommand    _command  = RrCommand::MSP_STATUS;
-            uint8_t*     _data      = nullptr;
-
-            //checksum
-            uint16_t    _crc       = 0;
-
-            // termination character is used because it is a good idea.
+            RrEnecoder<T>  _encoder;
+            RrDirection _direction = RrDirection::MWC_ERROR;
             const char _termination = 0x1E;
+            Crc32 _crc32;
     };
 }
 
