@@ -1,11 +1,9 @@
-#ifndef MSP_IDENT_CURATOR_HPP
-#define MSP_IDENT_CURATOR_HPP
+#ifndef ENCODER_MSP_STATUS_HPP
+#define ENCODER_MSP_STATUS_HPP
 
 #include <Arduino.h>
-#include <Ethernet.h>
-#include <utility/w5100.h>
 #include <encoder.hpp>
-#include <msp_ident.hpp>
+#include <msp_status.hpp>
 
 namespace rrobot {
     /**
@@ -13,14 +11,14 @@ namespace rrobot {
      * @brief 
      * implemnentation of RrEnecoder for MspIdent command
      */
-    class MspIdentEncoder : public RrEnecoder<MspIdent> {
+    class EncoderMspStatus : public RrEnecoder<MspStatus> {
         public:
         uint16_t getSize() override {
             return (sizeof(uint16_t) * 4) + sizeof(uint8_t);
         }
 
         RrCommand getCommand() override {
-            return RrCommand::MSP_IDENT;
+            return RrCommand::MSP_STATUS;
         }
 
         /**
@@ -35,7 +33,7 @@ namespace rrobot {
          *   uint32_t _flag;
          *   uint8_t  _current_set;
          */
-        uint8_t* encode(MspIdent data) override {
+        uint8_t* encode(MspStatus data) override {
             uint8_t* encoded = static_cast<uint8_t*>(malloc(getSize()));
             int pos = splitUint16(data.get_cycletime(), encoded, 0);
             pos = splitUint16(data.get_i2c_errors_count(), encoded, pos);
@@ -46,8 +44,8 @@ namespace rrobot {
         }
 
 
-        MspIdent decode(uint8_t *data) override {
-            MspIdent decoded;
+        MspStatus decode(uint8_t *data) override {
+            MspStatus decoded;
             decoded.set_cycletime(ntohs(decodeUint16(data[0], data[1])));
             decoded.set_i2c_errors_count(ntohs(decodeUint16(data[2], data[3])));
             decoded.set_sensor(ntohs(decodeUint16(data[4], data[5])));

@@ -43,7 +43,7 @@
              * @brief
              * when given encoded data, desialize and return variable of type T.
              */
-            virtual T decode(uint8_t* data);
+            virtual T decode(uint8_t* data) = 0;
     };
  }
 
