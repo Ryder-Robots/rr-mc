@@ -13,6 +13,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("test");
 }
 
 /**
