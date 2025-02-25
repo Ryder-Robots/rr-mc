@@ -91,7 +91,9 @@ namespace rrobot {
              * @brief
              * Given network packet decode it, and set internal variables.
              */
-            T decode(uint8_t* data);
+            T decode(uint8_t* data) {
+                // need logic here to decode.
+            }
 
             /**
              * @fn reset

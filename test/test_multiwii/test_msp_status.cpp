@@ -26,6 +26,8 @@ void test_should_encode() {
     RrMultiWii<MspStatus> multiWii(encoder, crc);
     uint8_t* encoded = multiWii.encode(mspStatus);
 
+    
+
     TEST_ASSERT_EQUAL(1, 1);
 }
 
