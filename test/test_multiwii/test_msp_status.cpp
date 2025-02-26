@@ -45,17 +45,17 @@ void test_should_encode() {
     TEST_ASSERT_EQUAL(100, (static_cast<uint16_t>(encoded[5]) << 8) | encoded[6]);
 
     // error count
-    // TEST_ASSERT_EQUAL(2, (static_cast<uint16_t>(encoded[6]) << 8) | encoded[7]);
+    TEST_ASSERT_EQUAL(2, (static_cast<uint16_t>(encoded[7]) << 8) | encoded[8]);
 
     // sensors
-    // TEST_ASSERT_EQUAL(
-    //     static_cast<uint16_t>(RrMspSensorFlags::BARO) | 
-    //     static_cast<uint16_t>(RrMspSensorFlags::GPS)  |
-    //     static_cast<uint16_t>(RrMspSensorFlags::MAG)  |
-    //     static_cast<uint16_t>(RrMspSensorFlags::SONAR),
+    TEST_ASSERT_EQUAL(
+        static_cast<uint16_t>(RrMspSensorFlags::BARO) | 
+        static_cast<uint16_t>(RrMspSensorFlags::GPS)  |
+        static_cast<uint16_t>(RrMspSensorFlags::MAG)  |
+        static_cast<uint16_t>(RrMspSensorFlags::SONAR),
         
-    //     (static_cast<uint16_t>(encoded[8]) << 8) | encoded[9]
-    // );
+        (static_cast<uint16_t>(encoded[9]) << 8) | encoded[10]
+    );
 }
 
 void setUp(void) {

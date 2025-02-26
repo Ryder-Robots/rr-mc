@@ -60,7 +60,7 @@ namespace rrobot {
             int splitUint16(uint16_t value, uint8_t* data, int pos) {
                 uint16_t encoded = htons(value);
                 data[pos] = (value >> 8) & 0xFF;
-                data[pos +1 ] = value & 0xFF;
+                data[pos + 1] = value & 0xFF;
                 return pos + 2;
             }
 
