@@ -1,3 +1,11 @@
+#ifdef NATIVE
+
+#define htons(X) X
+#define htonl(X) X
+#define ntohs(X) X
+
+#endif
+
 #include <unity.h>
 #include <ArduinoFake.h>
 #include <multiwii.hpp>
@@ -23,12 +31,13 @@ void test_should_encode() {
     Crc32 crc;
     EncoderMspStatus* encoder = new EncoderMspStatus();
 
-    RrMultiWii<MspStatus> multiWii(encoder, crc);
-    uint8_t* encoded = multiWii.encode(mspStatus);
-
+    RrMultiWii multiWii(encoder, crc);
+    uint8_t* encoded = multiWii.encode(static_cast<void *>(&mspStatus));
     
+    //std::string s(reinterpret_cast<char*>(encoded));
+    //Serial.println(s);
 
-    TEST_ASSERT_EQUAL(1, 1);
+    TEST_ASSERT_EQUAL(1, encoded[0]);
 }
 
 void setUp(void) {

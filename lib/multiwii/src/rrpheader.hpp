@@ -3,6 +3,14 @@
 
 #include <stdint.h>
 
+#ifdef NATIVE
+
+#define htons(X) X
+#define htonl(X) X
+#define ntohs(X) X
+
+#endif
+
 namespace rrobot {
      /**
      * @class RrDirection

@@ -1,5 +1,4 @@
-#include <Arduino.h>
-#include <multiwii.hpp>
+#include <main.hpp>
 
 /**
  * 

@@ -9,9 +9,9 @@ namespace rrobot {
     /**
      * @class MspIdentEncoder
      * @brief 
-     * implemnentation of RrEnecoder for MspIdent command
+     * implemnentation of RrEncoder for MspIdent command
      */
-    class EncoderMspStatus : public RrEnecoder<MspStatus> {
+    class EncoderMspStatus : public RrEncoder {
         public:
         uint16_t getSize() override {
             return (sizeof(uint16_t) * 4) + sizeof(uint8_t);
@@ -33,26 +33,27 @@ namespace rrobot {
          *   uint32_t _flag;
          *   uint8_t  _current_set;
          */
-        uint8_t* encode(MspStatus data) override {
+        uint8_t* encode(void* data) override {
             uint8_t* encoded = static_cast<uint8_t*>(malloc(getSize()));
-            int pos = splitUint16(data.get_cycletime(), encoded, 0);
-            pos = splitUint16(data.get_i2c_errors_count(), encoded, pos);
-            pos = splitUint16(data.get_sensor(), encoded, pos);
-            pos = splitUint16(data.get_flag(), encoded, pos);
-            encoded[pos] = data.get_current_set();
+            MspStatus* obj = static_cast<MspStatus*>(data);
+            int pos = splitUint16(obj->get_cycletime(), encoded, 0);
+            pos = splitUint16(obj->get_i2c_errors_count(), encoded, pos);
+            pos = splitUint16(obj->get_sensor(), encoded, pos);
+            pos = splitUint16(obj->get_flag(), encoded, pos);
+            encoded[pos] = obj->get_current_set();
             return encoded;
         }
 
 
-        MspStatus decode(uint8_t *data) override {
-            MspStatus decoded;
-            decoded.set_cycletime(ntohs(decodeUint16(data[0], data[1])));
-            decoded.set_i2c_errors_count(ntohs(decodeUint16(data[2], data[3])));
-            decoded.set_sensor(ntohs(decodeUint16(data[4], data[5])));
-            decoded.set_flag(ntohs(decodeUint16(data[6], data[7])));
-            decoded.set_current_set(data[8]);
+        void* decode(uint8_t *data) override {
+            MspStatus *decoded = new MspStatus();
+            decoded->set_cycletime(ntohs(decodeUint16(data[0], data[1])));
+            decoded->set_i2c_errors_count(ntohs(decodeUint16(data[2], data[3])));
+            decoded->set_sensor(ntohs(decodeUint16(data[4], data[5])));
+            decoded->set_flag(ntohs(decodeUint16(data[6], data[7])));
+            decoded->set_current_set(data[8]);
 
-            return decoded;
+            return static_cast<void*>(decoded);
         }
 
         private:
