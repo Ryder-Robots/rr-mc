@@ -8,6 +8,7 @@
 #define htons(X) X
 #define htonl(X) X
 #define ntohs(X) X
+#define ntohl(X) X
 
 #endif
 

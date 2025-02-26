@@ -1,12 +1,9 @@
 #ifndef MSP_STATUS_HPP
 #define MSP_STATUS_HPP
 
-#include <stdint.h>
+#include <rrpheader.hpp>
 
 namespace rrobot {
-
-    
-
     class MspStatus {
 
         public:
@@ -31,17 +28,17 @@ namespace rrobot {
             return _sensor;
         }
 
-        void set_flag(uint16_t flag) {
+        void set_flag(RRP_STATUS flag) {
             _flag = flag;
         }
-        uint16_t get_flag() {
+        RRP_STATUS get_flag() {
             return _flag;
         }
 
-        void set_current_set(uint16_t current_set) {
+        void set_current_set(uint8_t current_set) {
             _current_set = current_set;
         }
-        uint16_t get_current_set() {
+        uint8_t get_current_set() {
             return _current_set;
         }
 
@@ -49,7 +46,7 @@ namespace rrobot {
         uint16_t _cycletime;
         uint16_t _i2c_errors_count;
         uint16_t _sensor;
-        uint32_t _flag;
+        RRP_STATUS _flag;
         uint8_t  _current_set;
     };
 }

@@ -41,6 +41,16 @@ namespace rrobot
          * when given encoded data, desialize and return variable of type T.
          */
         virtual void* decode(uint8_t *data) = 0;
+
+
+        int splitUint16(uint16_t value, uint8_t *data, int pos);
+        int splitUint32(uint32_t value, uint8_t *data, int pos);
+
+        uint16_t decodeUint16(uint8_t* data, int& pos);
+        uint32_t decodeUint32(uint8_t* data, int& pos);
+
+
+
     };
 }
 
