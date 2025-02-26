@@ -34,10 +34,28 @@ void test_should_encode() {
     RrMultiWii multiWii(encoder, crc);
     uint8_t* encoded = multiWii.encode(static_cast<void *>(&mspStatus));
     
-    //std::string s(reinterpret_cast<char*>(encoded));
-    //Serial.println(s);
 
-    TEST_ASSERT_EQUAL(1, encoded[0]);
+    TEST_ASSERT_EQUAL('$', encoded[0]);
+    TEST_ASSERT_EQUAL('M', encoded[1]);
+    uint16_t sz = (static_cast<uint16_t>(encoded[2]) << 8) | encoded[3];
+    TEST_ASSERT_EQUAL((sizeof(uint16_t) * 4) + sizeof(uint8_t), sz);
+    TEST_ASSERT_EQUAL(RrCommand::MSP_STATUS, encoded[4]);
+
+    // cycletime
+    TEST_ASSERT_EQUAL(100, (static_cast<uint16_t>(encoded[5]) << 8) | encoded[6]);
+
+    // error count
+    // TEST_ASSERT_EQUAL(2, (static_cast<uint16_t>(encoded[6]) << 8) | encoded[7]);
+
+    // sensors
+    // TEST_ASSERT_EQUAL(
+    //     static_cast<uint16_t>(RrMspSensorFlags::BARO) | 
+    //     static_cast<uint16_t>(RrMspSensorFlags::GPS)  |
+    //     static_cast<uint16_t>(RrMspSensorFlags::MAG)  |
+    //     static_cast<uint16_t>(RrMspSensorFlags::SONAR),
+        
+    //     (static_cast<uint16_t>(encoded[8]) << 8) | encoded[9]
+    // );
 }
 
 void setUp(void) {
