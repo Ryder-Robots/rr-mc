@@ -72,11 +72,10 @@ void test_should_encode() {
         (static_cast<uint16_t>(encoded[9]) << 8) | encoded[10]
     );
 
-    // // flag [11, 12, 13, 14]
-    // TEST_ASSERT_EQUAL(
-    //     static_cast<uint32_t>(RRP_STATUS::ACTIVE), 
-    //     (static_cast<uint32_t>(encoded[11] << 24)  | encoded[12] << 16 | encoded[13] << 8 | encoded[14])
-    // );
+    int pos = 11;
+    RRP_STATUS flag = static_cast<RRP_STATUS>(encoder->decodeUint32(encoded, pos));
+    TEST_ASSERT_EQUAL(RRP_STATUS::ACTIVE, flag);
+
 }
 
 void setUp(void) {
