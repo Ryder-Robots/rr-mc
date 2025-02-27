@@ -74,8 +74,11 @@ void test_should_encode() {
 
     int pos = 11;
     RRP_STATUS flag = static_cast<RRP_STATUS>(encoder->decodeUint32(encoded, pos));
-    TEST_ASSERT_EQUAL(RRP_STATUS::ACTIVE, flag);
+    TEST_ASSERT_EQUAL_UINT32(RRP_STATUS::ACTIVE, flag);
 
+    uint32_t crcv = encoder->decodeUint32(encoded, pos);
+    TEST_ASSERT_EQUAL(19, pos);
+    TEST_ASSERT_EQUAL_UINT32(3329730, crcv);
 }
 
 void setUp(void) {

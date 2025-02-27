@@ -23,8 +23,8 @@ uint8_t*  RrMultiWii::encode(void* data) {
         packet[i++] = static_cast<uint8_t>(_encoder->getCommand()) & 0xFF;
 
         const uint8_t* encoded =  _encoder->encode(data);
-        for (int c = 0; c < sizeof(encoded); c++) {
-            packet[i++] = encoded[c];
+        for (int c = 0; c < _encoder->getSize(); c++) {
+            packet[i++] = encoded[c] & 0xFF;
         }
 
         // CRC check goes here.
