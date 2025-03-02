@@ -46,15 +46,15 @@ void test_should_encode() {
 
     TEST_ASSERT_EQUAL('$', encoded[0]);
     TEST_ASSERT_EQUAL('M', encoded[1]);
-    uint16_t sz = ntohs(static_cast<uint16_t>(encoded[2]) << 8 | encoded[3]);
+    uint16_t sz = static_cast<uint16_t>(encoded[2]) << 8 | encoded[3];
     TEST_ASSERT_EQUAL((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), sz);
     TEST_ASSERT_EQUAL(RrCommand::MSP_STATUS, encoded[4]);
 
     // cycletime [5, 6]
-    TEST_ASSERT_EQUAL(100, ntohs((static_cast<uint16_t>(encoded[5]) << 8) | encoded[6]));
+    TEST_ASSERT_EQUAL(100, (static_cast<uint16_t>(encoded[5]) << 8) | encoded[6]);
 
     // error count [7, 8]
-    TEST_ASSERT_EQUAL(2, ntohs((static_cast<uint16_t>(encoded[7]) << 8) | encoded[8]));
+    TEST_ASSERT_EQUAL(2, (static_cast<uint16_t>(encoded[7]) << 8) | encoded[8]);
 
     // sensors [9, 10]
     TEST_ASSERT_EQUAL(
@@ -63,11 +63,11 @@ void test_should_encode() {
         static_cast<uint16_t>(RrMspSensorFlags::MAG)  |
         static_cast<uint16_t>(RrMspSensorFlags::SONAR),
         
-        ntohs((static_cast<uint16_t>(encoded[9]) << 8) | encoded[10])
+        (static_cast<uint16_t>(encoded[9]) << 8) | encoded[10]
     );
 
     int pos = 11;
-    RRP_STATUS flag = static_cast<RRP_STATUS>(ntohs(encoder->decodeUint32(encoded, pos)));
+    RRP_STATUS flag = static_cast<RRP_STATUS>(encoder->decodeUint32(encoded, pos));
     TEST_ASSERT_EQUAL_UINT32(RRP_STATUS::ACTIVE, flag);
 
     uint32_t crcv = encoder->decodeUint32(encoded, pos);

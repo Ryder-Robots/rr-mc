@@ -17,7 +17,7 @@ uint8_t*  RrMultiWii::encode(void* data) {
     }
 
     if (_encoder->getSize() != 0) {
-        uint16_t sz = htons(_encoder->getSize());
+        uint16_t sz = _encoder->getSize();
         packet[i++] =  (sz >> 8) & 0xFF;
         packet[i++] = sz & 0xFF;
         packet[i++] = static_cast<uint8_t>(_encoder->getCommand()) & 0xFF;
@@ -28,7 +28,7 @@ uint8_t*  RrMultiWii::encode(void* data) {
         }
 
         // CRC check goes here.
-        uint32_t crc = htonl(_crc32.calculate(encoded, _encoder->getSize()));
+        uint32_t crc = _crc32.calculate(encoded, _encoder->getSize());
 
         packet[i++] = (crc >> 24) & 0xFF;
         packet[i++] = (crc >> 16) & 0xFF;
