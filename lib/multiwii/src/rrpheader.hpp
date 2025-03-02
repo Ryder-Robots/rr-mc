@@ -3,22 +3,17 @@
 
 #include <stdint.h>
 
-#ifdef NATIVE
 
-#include <arpa/inet.h>
-#include <netinet/in.h>
+// MultiWii proposes small endian which is kinda weird.
+#if defined(BYTE_ORDER) && BYTE_ORDER == LITTLE_ENDIAN
 
-// #define htons(X) X
-// #define htonl(X) X
-// #define ntohs(X) X
-// #define ntohl(X) X
+#define htons(X) X
+#define htonl(X) X
+#define ntohs(X) X
+#define ntohl(X) X
 
+// There is some weirdness going on here. Not sure why yet.
 #else
-
-#define htons(X) PP_HTONS(X)
-#define htonl(X) PP_HTONL(X)
-#define ntohs(X) PP_NTOHS(X)
-#define ntohl(X) PP_NTOHL(X)
 
 #define PP_HTONS(x) ((uint16_t)((((x) & (uint16_t)0x00ffU) << 8) | (((x) & (uint16_t)0xff00U) >> 8)))
 #define PP_NTOHS(x) PP_HTONS(x)
@@ -27,6 +22,11 @@
                      (((x) & (uint32_t)0x00ff0000UL) >>  8) | \
                      (((x) & (uint32_t)0xff000000UL) >> 24))
 #define PP_NTOHL(x) PP_HTONL(x)
+
+#define htons(X) PP_HTONS(X)
+#define htonl(X) PP_HTONL(X)
+#define ntohs(X) PP_NTOHS(X)
+#define ntohl(X) PP_NTOHL(X)
 
 #endif
 
