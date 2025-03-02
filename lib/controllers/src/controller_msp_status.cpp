@@ -3,12 +3,6 @@
 
 using namespace rrobot;
 
-// Return multi wii object using encoder, and refering the bottom encoder.
-// this routine can be moved to the abstract controller.
-uint8_t* MspStatusController::execute(uint8_t *) {
-    return nullptr;
-}
-
 
 void* MspStatusController::execute(void* command) {
 
@@ -21,4 +15,8 @@ void* MspStatusController::execute(void* command) {
     status->set_current_set(_current_set);
 
     return status;
+}
+
+RrEncoder* MspStatusController::encoder() {
+    return _encoder;
 }

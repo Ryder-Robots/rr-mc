@@ -13,13 +13,13 @@ namespace rrobot {
      * and returns a result from the execution. 
      */
     class RrController {
-
+        public:
         /**
          * @fn execute
          * @brief
          * given data execute command.
          */
-        virtual uint8_t* execute(uint8_t *data) = 0;
+        uint8_t* execute(uint8_t *data);
 
 
         /**
@@ -27,7 +27,17 @@ namespace rrobot {
          * @brief
          * internal execution of the command, for controller to controller communication.
          */
-        virtual void* execute(void* command) = 0; 
+        virtual void* execute(void* command) = 0;
+
+        /**
+         * @fn encoder()
+         * @brief
+         * returns encoder for controller.
+         */
+        virtual RrEncoder* encoder() = 0;
+
+        private:
+        Crc32 _crc;
     };
 }
 

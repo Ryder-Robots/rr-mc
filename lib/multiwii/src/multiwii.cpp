@@ -52,5 +52,20 @@ uint8_t*  RrMultiWii::encode(void* data) {
 uint8_t* RrMultiWii::decodePayload(uint8_t* data) {
     // need logic here to decode.
 
-    return nullptr;
+    uint16_t sz = (uint16_t)data[3] | ((uint16_t)data[4] << 8);
+    uint8_t* payload =  nullptr;
+
+    if (sz != 0) {
+        payload = reinterpret_cast<uint8_t *>(malloc(sizeof(uint8_t) * sz));
+        for (int i = 0; i < sz; i++) {
+
+            if (payload[i] == _termination) {
+                // throw exception.
+            }
+
+            payload[i] = data[5 + i];
+        }
+    }
+
+    return payload;
 }

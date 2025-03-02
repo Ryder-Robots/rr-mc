@@ -49,13 +49,13 @@ namespace rrobot {
              */
             void reset() {_direction = RrDirection::MWC_ERROR;}
 
-            template <typename T> T decode(uint8_t *data)
+            void* decode(uint8_t *data)
             {
                 uint8_t* payload = decodePayload(data);
-                return *(reinterpret_cast<T *>(_encoder->decode(payload)) );
+                return _encoder->decode(payload);
             }
-        private:
             uint8_t* decodePayload(uint8_t* data);
+        private:
             const char  _preamble[2] = {'$', 'M'};
             RrEncoder*  _encoder;
             RrDirection _direction = RrDirection::MWC_ERROR;

@@ -8,10 +8,9 @@ namespace rrobot {
     class MspStatusController : public RrController {
         public:
 
-        uint8_t* execute(uint8_t *) override;
-
-
         void* execute(void* command) override;
+
+        RrEncoder* encoder() override;
 
         void set_cycletime(uint16_t cycletime) {
             _cycletime = cycletime;

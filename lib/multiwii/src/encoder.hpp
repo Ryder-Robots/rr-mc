@@ -48,9 +48,6 @@ namespace rrobot
 
         uint16_t decodeUint16(uint8_t* data, int& pos);
         uint32_t decodeUint32(uint8_t* data, int& pos);
-
-
-
     };
 }
 
