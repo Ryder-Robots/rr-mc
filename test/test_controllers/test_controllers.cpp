@@ -72,6 +72,21 @@ void test_all_parameters(void) {
     TEST_ASSERT_EQUAL_UINT8(7, result->get_current_set());
 }
 
+void test_command_execute(void) {
+    MspStatusController controller;
+    controller.set_cycletime(1000);
+    controller.set_i2c_errors_count(500);
+    controller.set_flag(RRP_STATUS::ACTIVE);
+    controller.set_current_set(5);
+    uint8_t data[] = {'$', 'M', 0, 0, static_cast<uint8_t>(RrCommand::MSP_STATUS), 0, 0x1E};
+    MspStatus* response = static_cast<MspStatus*>(controller.execute(data));
+
+    TEST_ASSERT_EQUAL_UINT16(1000, response->get_cycletime());
+    TEST_ASSERT_EQUAL_UINT16(500, response->get_i2c_errors_count());
+    TEST_ASSERT_EQUAL(RRP_STATUS::ACTIVE, response->get_flag());
+    TEST_ASSERT_EQUAL_UINT8(5, response->get_current_set());
+}
+
 int runUnityTests(void) {
     UNITY_BEGIN();
     RUN_TEST(test_set_cycletime);
@@ -79,6 +94,7 @@ int runUnityTests(void) {
     RUN_TEST(test_set_flag);
     RUN_TEST(test_set_current_set);
     RUN_TEST(test_all_parameters);
+    RUN_TEST(test_command_execute);
     return UNITY_END();
 }
 
