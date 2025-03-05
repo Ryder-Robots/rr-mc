@@ -2,6 +2,7 @@
 #include <unity.h>
 
 #include <controller_msp_status.hpp>
+#include <controller_msp_sensor.hpp>
 #include <limits>
 
 using namespace rrobot;
@@ -87,6 +88,15 @@ void test_command_execute(void) {
     TEST_ASSERT_EQUAL_UINT8(5, response->get_current_set());
 }
 
+
+void test_sensor_controller(void) {
+    MspSensorController controller = MspSensorController();
+    uint8_t data[] = {'$', 'M', 0, 0, static_cast<uint8_t>(RrCommand::MSP_SENSOR), 0, 0x1E};
+    MspSensor* response = static_cast<MspSensor*>(controller.execute(data));
+
+    TEST_ASSERT_EQUAL_INT32(1, response->get_accAvail());
+}
+
 int runUnityTests(void) {
     UNITY_BEGIN();
     RUN_TEST(test_set_cycletime);
@@ -95,6 +105,7 @@ int runUnityTests(void) {
     RUN_TEST(test_set_current_set);
     RUN_TEST(test_all_parameters);
     RUN_TEST(test_command_execute);
+    RUN_TEST(test_sensor_controller);
     return UNITY_END();
 }
 
