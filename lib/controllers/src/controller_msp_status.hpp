@@ -28,7 +28,6 @@ namespace rrobot {
             _current_set = current_set;
         }
 
-
         private:
         uint16_t _cycletime = 0;
         uint16_t _i2c_errors_count = 0;
