@@ -17,8 +17,8 @@ namespace rrobot {
     };
 
     enum class RrCommand : uint8_t {
-        MSP_IDENT  = 100,
         MSP_STATUS = 104,
+        MSP_SENSOR = 216,
     };
 
     enum class RrMspSensorFlags : uint16_t {

@@ -3,6 +3,7 @@
 
 #include <abstract_msp_factory.hpp>
 #include <controller_msp_status.hpp>
+#include <controller_msp_sensor.hpp>
 
 namespace rrobot {
     class Ld001ControllerFactory: public AbstractMspFactory {
@@ -13,6 +14,7 @@ namespace rrobot {
 
         private:
         MspStatusController* _statusController = new MspStatusController();
+        MspSensorController* _sensorController = new MspSensorController();
     };
 }
 

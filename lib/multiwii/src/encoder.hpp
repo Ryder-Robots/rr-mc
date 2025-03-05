@@ -1,6 +1,7 @@
 #ifndef RRPHEADER_HPP
 #define RRPHEADER_HPP
 
+#include <Arduino.h>
 #include <rrpheader.hpp>
 
 namespace rrobot
@@ -45,6 +46,7 @@ namespace rrobot
 
         int splitUint16(uint16_t value, uint8_t *data, int pos);
         int splitUint32(uint32_t value, uint8_t *data, int pos);
+        int splitFloat(float value, uint8_t* data, int pos);
 
         uint16_t decodeUint16(uint8_t* data, int& pos);
         uint32_t decodeUint32(uint8_t* data, int& pos);

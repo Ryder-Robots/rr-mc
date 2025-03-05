@@ -10,6 +10,7 @@
         "type_traits": "cpp",
         "utility": "cpp",
         "variant": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "new": "cpp"
     }
 }
