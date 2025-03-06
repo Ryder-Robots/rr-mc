@@ -1,8 +1,15 @@
+/**
+ * Interface to Arduino BLE33, note that bluetooth is not getting used at this stage.
+ */
+
 #ifndef BLE_HPP
 #define BLE_HPP
 
 #include <abstract_ble.hpp>
 
+/*
+ * interact with BME chip.
+ */
 #ifndef NATIVE
 #include <Arduino_BMI270_BMM150.h>
 #endif
@@ -10,6 +17,10 @@
 namespace rrobot {
 
 #ifdef NATIVE
+/*
+ * designed strictly for testing purposes. Gives constant values that can be 
+ * used to check for consistency. 
+ */
 class Ble : AbstractBle {
    public:
     void setContinuousMode() override {}
@@ -51,13 +62,18 @@ class Ble : AbstractBle {
     float magneticFieldSampleRate() { return 1.0; }
 };
 #else
+/*
+ * Interface to BLE source code. Refer to Arduino documenation to get actual values for this.
+ */
 class Ble : AbstractBle {
    public:
     void setContinuousMode() override {
         IMU.setContinuousMode();
     }
     
-    void oneShotMode() override {}
+    void oneShotMode() override {
+        IMU.oneShotMode();
+    }
     
     int begin() override { 
         return IMU.begin(); 
