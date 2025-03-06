@@ -33,5 +33,5 @@ int RrEncoder::splitUint32(uint32_t value, uint8_t *data, int pos) {
 
 int RrEncoder::splitFloat(float value, uint8_t* data, int pos) {
     memcpy(data + pos, &value, sizeof(float));
-    pos += sizeof(float);
+    return pos + sizeof(float);
 }

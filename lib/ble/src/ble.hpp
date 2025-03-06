@@ -33,15 +33,20 @@ class Ble : AbstractBle {
 
     int readGyroscope(float& x, float& y, float& z) override { 
         x = 0.00001;
-        y = 0.00001;
-        z = 0.05;
+        y = 0.00002;
+        z = 0.00005;
         return 1; 
     }
 
 
     int gyroscopeAvailable() override { return 1; }
     float gyroscopeSampleRate() override { return 1.0; }
-    int readMagneticField(float& x, float& y, float& z) { return 1; }
+    int readMagneticField(float& x, float& y, float& z) {
+        x = 0.00006;
+        y = 0.00302;
+        z = 0.00405;       
+        return 1; 
+    }
     int magneticFieldAvailable() { return 1; }
     float magneticFieldSampleRate() { return 1.0; }
 };

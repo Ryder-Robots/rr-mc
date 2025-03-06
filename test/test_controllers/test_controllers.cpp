@@ -95,6 +95,19 @@ void test_sensor_controller(void) {
     MspSensor* response = static_cast<MspSensor*>(controller.execute(data));
 
     TEST_ASSERT_EQUAL_INT32(1, response->get_accAvail());
+    TEST_ASSERT_EQUAL_FLOAT(1, response->get_accX());
+    TEST_ASSERT_EQUAL_FLOAT(2, response->get_accY());
+    TEST_ASSERT_EQUAL_FLOAT(3, response->get_accZ());
+
+    TEST_ASSERT_EQUAL_INT32(1, response->get_gyroAvail());
+    TEST_ASSERT_EQUAL_FLOAT(0.00001, response->get_gyroX());
+    TEST_ASSERT_EQUAL_FLOAT(0.00002, response->get_gyroY());
+    TEST_ASSERT_EQUAL_FLOAT(0.00005, response->get_gyroZ());
+
+    TEST_ASSERT_EQUAL_INT32(1, response->get_gyroAvail());
+    TEST_ASSERT_EQUAL_FLOAT(0.00006, response->get_magX());
+    TEST_ASSERT_EQUAL_FLOAT(0.00302, response->get_magY());
+    TEST_ASSERT_EQUAL_FLOAT(0.00405, response->get_magZ());    
 }
 
 int runUnityTests(void) {

@@ -23,11 +23,11 @@ namespace rrobot {
         }
 
         void set_accY(float acc_y) {
-            _acc_x = acc_y;
+            _acc_y = acc_y;
         }
 
         void set_accZ(float acc_z) {
-            _acc_x = acc_z;
+            _acc_z = acc_z;
         }
 
         float get_accX() {
@@ -55,11 +55,11 @@ namespace rrobot {
         }
 
         void set_gyroY(float gyro_y) {
-            _gyro_x = gyro_y;
+            _gyro_y = gyro_y;
         }
 
         void set_gyroZ(float gyro_z) {
-            _gyro_x = gyro_z;
+            _gyro_z = gyro_z;
         }
 
         float get_gyroX() {
@@ -87,11 +87,11 @@ namespace rrobot {
         }
 
         void set_magY(float mag_y) {
-            _mag_x = mag_y;
+            _mag_y = mag_y;
         }
 
         void set_magZ(float mag_z) {
-            _mag_x = mag_z;
+            _mag_z = mag_z;
         }
 
         float get_magX() {
