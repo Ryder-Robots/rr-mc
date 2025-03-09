@@ -15,6 +15,9 @@ RrController*  Ld001ControllerFactory::retrieveEncoder(RrCommand command) {
         case RrCommand::MSP_SENSOR:
             return _sensorController;
             break;
+        case RrCommand::MSP_EXIT:
+            return _shutdownController;
+            break;    
     }
 
     return nullptr;

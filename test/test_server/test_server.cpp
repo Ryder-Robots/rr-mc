@@ -10,7 +10,6 @@ void test_serial_read() {
    
     When(Method(ArduinoFake(Serial), read)).Return('$', 'M', 0, 0, static_cast<uint8_t>(RrCommand::MSP_STATUS), 0, 0x1E);
     When(Method(ArduinoFake(Serial), available)).Return(1);
-    //When(Method(ArduinoFake(Serial), begin)).AlwaysReturn();
     
     SerialUsb serialUsb = SerialUsb();
     uint8_t* data = serialUsb.read();
@@ -22,11 +21,7 @@ void test_serial_read() {
     TEST_ASSERT_EQUAL(static_cast<uint8_t>(RrCommand::MSP_STATUS), data[4]);
     TEST_ASSERT_EQUAL_UINT8(0, data[5]);
     TEST_ASSERT_EQUAL_UINT8( 0x1E, data[6]);
-
-    serialUsb.available();
-    serialUsb.begin(9600);
-    Verify(Method(ArduinoFake(Serial), available)).Once();
-    //Verify(Method(ArduinoFake(Serial), begin).Using(9600)).Once();
+    TEST_ASSERT_EQUAL(1, serialUsb.available());
 }
 
 void setUp(void) {

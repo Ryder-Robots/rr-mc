@@ -19,6 +19,7 @@ namespace rrobot {
     enum class RrCommand : uint8_t {
         MSP_STATUS = 104,
         MSP_SENSOR = 216,
+        MSP_EXIT   = 217, // inbound command, to signify that processor should shutdown.
     };
 
     enum class RrMspSensorFlags : uint16_t {

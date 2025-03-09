@@ -3,5 +3,7 @@
 
 #include <Arduino.h>
 #include <multiwii.hpp>
+#include <ld002_controller_factory.hpp>
+#include <serial_usb.hpp>
 
 #endif

@@ -1,0 +1,30 @@
+#ifndef CONTROLLER_MSP_SHUTDOWN_HPP
+#define CONTROLLER_MSP_SHUTDOWN_HPP
+
+#include <abstract_controller.hpp>
+#include <encoder_msp_shutdown.hpp>
+
+namespace rrobot {
+    class MspShutdownController : public RrController {
+        public:
+        void* execute(void* command) override {
+            _shutdown = true;
+        }
+
+        RrEncoder* encoder() override {
+            return _encoder;
+        }
+
+        bool isShutdown() {
+            return _shutdown;
+        }
+
+        private:
+        bool _shutdown = false;
+        EncoderMspShutdown* _encoder = new EncoderMspShutdown();
+
+
+    };
+}
+
+#endif // CONTROLLER_MSP_SHUTDOWN_HPP

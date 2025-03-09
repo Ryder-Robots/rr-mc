@@ -1,18 +1,39 @@
 #include <main.hpp>
 
+using namespace rrobot;
 /**
  * 
  * $M[direction][size][command][data][checksum]
  */
+Ld001ControllerFactory ctl;
+SerialUsb serialUsb;
 
 // put function declarations here:
 void setup() {
-  // Initilize pins and send back armed response.
-  Serial.println("test");
+  ctl.setUp();
+  serialUsb.begin(9600);
+}
+
+void teardown() {
+  ctl.tearDown();
 }
 
 void loop() {
-  Serial.println("test");
+  MspShutdownController* shutdown = reinterpret_cast<MspShutdownController*>(ctl.retrieveEncoder(RrCommand::MSP_EXIT));
+
+  if(shutdown->isShutdown()) {
+    teardown();
+  }
+  
+  if (serialUsb.available()) {
+    uint8_t* ingres = serialUsb.read();
+    RrController*encoder = ctl.retrieveEncoder(ingres);
+
+    //TODO: needto get correct size. This is currently in encoder, so it can be add as may be a pass by,
+    // or possibly as a method from the controller.
+    serialUsb.write(encoder->execute(ingres), 1);
+    serialUsb.flush();
+  }
 }
 
 /**
