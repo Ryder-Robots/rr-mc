@@ -1,9 +1,11 @@
 #include <serial_usb.hpp>
 
 using namespace rrobot;
+using namespace arduino;
 
 void SerialUsb::begin(unsigned long baud) {
     Serial.begin(baud);
+    while(!Serial);
 }
 
 size_t SerialUsb::write(const uint8_t* bf, size_t sz) {
