@@ -11,7 +11,7 @@ SerialUsb serialUsb;
 // put function declarations here:
 void setup() {
   ctl.setUp();
-  serialUsb.begin(9600);
+  serialUsb.begin(SERIAL_BAUD);
 }
 
 void teardown() {
@@ -34,6 +34,7 @@ void loop() {
   }
 }
 
+#ifdef NATIVE
 /**
  * @fn main
  * @brief
@@ -46,3 +47,5 @@ int main() {
   }
   return 0;
 }
+
+#endif
