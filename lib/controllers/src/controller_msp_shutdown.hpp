@@ -9,6 +9,7 @@ namespace rrobot {
         public:
         void* execute(void* command) override {
             _shutdown = true;
+            return nullptr;
         }
 
         RrEncoder* encoder() override {

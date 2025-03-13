@@ -7,7 +7,7 @@ void SerialUsb::begin(unsigned long baud) {
 }
 
 size_t SerialUsb::write(const uint8_t* bf, size_t sz) {
-    Serial.write(bf, sz);
+    return Serial.write(bf, sz);
 }
 
 void SerialUsb::flush(void) {

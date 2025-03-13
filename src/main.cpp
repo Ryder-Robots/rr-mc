@@ -29,9 +29,7 @@ void loop() {
     uint8_t* ingres = serialUsb.read();
     RrController*encoder = ctl.retrieveEncoder(ingres);
 
-    //TODO: needto get correct size. This is currently in encoder, so it can be add as may be a pass by,
-    // or possibly as a method from the controller.
-    serialUsb.write(encoder->execute(ingres), 1);
+    serialUsb.write(encoder->execute(ingres), encoder->encoder()->getSize());
     serialUsb.flush();
   }
 }
