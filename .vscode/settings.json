@@ -12,6 +12,18 @@
         "variant": "cpp",
         "limits": "cpp",
         "new": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "__tree": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "set": "cpp",
+        "string": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "vector": "cpp"
     }
 }

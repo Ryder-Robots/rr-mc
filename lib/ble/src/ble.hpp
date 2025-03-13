@@ -80,7 +80,7 @@ class Ble : AbstractBle {
     }
     
     void end() override {
-        IMU.end();
+        // IMU.end();
     }
 
     int readAcceleration(float& x, float& y, float& z) override { 
