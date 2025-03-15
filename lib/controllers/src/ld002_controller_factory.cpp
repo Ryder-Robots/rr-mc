@@ -17,8 +17,9 @@ RrController*  Ld001ControllerFactory::retrieveEncoder(RrCommand command) {
             break;
         case RrCommand::MSP_EXIT:
             return _shutdownController;
-            break;    
+            break;
     }
 
-    return nullptr;
+    // if encoder not found then status is a pretty safe bet.
+    return _statusController;
 }

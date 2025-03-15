@@ -6,4 +6,8 @@
 #include <ld002_controller_factory.hpp>
 #include <serial_usb.hpp>
 
+#ifndef SERIAL_BAUD
+#define SERIAL_BAUD 9600
+#endif
+
 #endif
