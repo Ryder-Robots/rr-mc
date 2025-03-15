@@ -23,7 +23,7 @@ namespace rrobot {
          * @brief
          * write bytes to USB.
          */
-        size_t write(const uint8_t* bf, size_t sz) override;
+        size_t write(const uint8_t) override;
 
         /**
          * @fn flush

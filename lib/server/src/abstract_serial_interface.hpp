@@ -17,7 +17,7 @@ namespace rrobot {
          */
         virtual void begin(unsigned long) = 0;
 
-        virtual size_t write(const uint8_t*, size_t) = 0;
+        virtual size_t write(const uint8_t) = 0;
 
         /**
          * @fn flush
