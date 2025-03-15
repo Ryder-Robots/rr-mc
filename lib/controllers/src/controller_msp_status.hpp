@@ -8,7 +8,7 @@ namespace rrobot {
     class MspStatusController : public RrController {
         public:
 
-        void* execute(void* command) override;
+        void* run(void* request) override;
 
         RrEncoder* encoder() override;
 

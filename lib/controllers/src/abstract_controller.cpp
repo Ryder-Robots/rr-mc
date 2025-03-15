@@ -8,6 +8,6 @@ uint8_t* RrController::execute(uint8_t* command) {
     uint8_t* payload = multiWii.decodePayload(command);
 
     void* decoded = encoder()->decode(payload);
-    void* result = execute(decoded);
+    void* result = run(decoded);
     return multiWii.encode(result);
 }

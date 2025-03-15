@@ -23,7 +23,7 @@ void test_set_cycletime(void) {
     controller.set_cycletime(1000);
     controller.set_i2c_errors_count(500);
     MspStatus *result =
-        reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+        reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
     TEST_ASSERT_EQUAL_UINT16(1000, result->get_cycletime());
 }
 
@@ -33,17 +33,17 @@ void test_set_i2c_errors_count(void) {
     // Test normal value
     controller.set_i2c_errors_count(500);
     MspStatus *result =
-        reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+        reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
     TEST_ASSERT_EQUAL_UINT16(500, result->get_i2c_errors_count());
 }
 
 void test_set_flag(void) {
     MspStatusController controller;
     MspStatus *result =
-        reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+        reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
 
     controller.set_flag(RRP_STATUS::ACTIVE);
-    result = reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+    result = reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
     TEST_ASSERT_EQUAL(RRP_STATUS::ACTIVE, result->get_flag());
 }
 
@@ -53,7 +53,7 @@ void test_set_current_set(void) {
     // Test normal value
     controller.set_current_set(5);
     MspStatus *result =
-        reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+        reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
     TEST_ASSERT_EQUAL_UINT8(5, result->get_current_set());
 }
 
@@ -65,7 +65,7 @@ void test_all_parameters(void) {
     controller.set_current_set(7);
 
     MspStatus *result =
-        reinterpret_cast<MspStatus *>(controller.execute(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
+        reinterpret_cast<MspStatus *>(controller.run(reinterpret_cast<void *>(RrCommand::MSP_STATUS)));
 
     TEST_ASSERT_EQUAL_UINT16(2000, result->get_cycletime());
     TEST_ASSERT_EQUAL_UINT16(300, result->get_i2c_errors_count());
@@ -80,7 +80,7 @@ void test_command_execute(void) {
     controller.set_flag(RRP_STATUS::ACTIVE);
     controller.set_current_set(5);
     uint8_t data[] = {'$', 'M', 0, 0, static_cast<uint8_t>(RrCommand::MSP_STATUS), 0, 0x1E};
-    MspStatus* response = static_cast<MspStatus*>(controller.execute(data));
+    MspStatus* response = static_cast<MspStatus*>(controller.run(data));
 
     TEST_ASSERT_EQUAL_UINT16(1000, response->get_cycletime());
     TEST_ASSERT_EQUAL_UINT16(500, response->get_i2c_errors_count());
@@ -92,7 +92,7 @@ void test_command_execute(void) {
 void test_sensor_controller(void) {
     MspSensorController controller = MspSensorController();
     uint8_t data[] = {'$', 'M', 0, 0, static_cast<uint8_t>(RrCommand::MSP_SENSOR), 0, 0x1E};
-    MspSensor* response = static_cast<MspSensor*>(controller.execute(data));
+    MspSensor* response = static_cast<MspSensor*>(controller.run(data));
 
     TEST_ASSERT_EQUAL_INT32(1, response->get_accAvail());
     TEST_ASSERT_EQUAL_FLOAT(1, response->get_accX());

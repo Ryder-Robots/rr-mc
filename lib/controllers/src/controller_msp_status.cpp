@@ -4,7 +4,7 @@
 using namespace rrobot;
 
 
-void* MspStatusController::execute(void* command) {
+void* MspStatusController::run(void* request) {
 
     MspStatus* status = new MspStatus();
 

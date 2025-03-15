@@ -9,7 +9,7 @@
 namespace rrobot {
     class MspSensorController : public RrController {
         public:
-        void* execute(void* command) override;
+        void* run(void* command) override;
 
         RrEncoder* encoder() override;
 

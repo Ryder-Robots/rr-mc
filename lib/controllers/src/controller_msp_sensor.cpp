@@ -2,7 +2,10 @@
 
 using namespace rrobot;
 
-void* MspSensorController::execute(void* command) {
+/*
+ * For sensor command there is no request, this is void.
+ */
+void* MspSensorController::run(void* request) {
     MspSensor* sensor = new MspSensor();
     float x = 0, y = 0, z = 0;
 

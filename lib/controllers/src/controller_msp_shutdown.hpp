@@ -7,7 +7,7 @@
 namespace rrobot {
     class MspShutdownController : public RrController {
         public:
-        void* execute(void* command) override {
+        void* run(void* request) override {
             _shutdown = true;
             return nullptr;
         }

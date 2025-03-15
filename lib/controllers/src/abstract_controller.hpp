@@ -13,6 +13,7 @@ namespace rrobot {
      * and returns a result from the execution. 
      */
     class RrController {
+        // TODO, instead assuming the data is already read,  read it here, this way default can be set.
         public:
         /**
          * @fn execute
@@ -22,12 +23,14 @@ namespace rrobot {
         uint8_t* execute(uint8_t *data);
 
 
+        //TODO: This should change to command, and optional data if any. Perhaps use run() instead of execute sothere
+        // is a distinction.
         /**
          * @fn execute
          * @brief
          * internal execution of the command, for controller to controller communication.
          */
-        virtual void* execute(void* command) = 0;
+        virtual void* run(void* request) = 0;
 
         /**
          * @fn encoder()
