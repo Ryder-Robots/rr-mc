@@ -38,7 +38,7 @@ namespace rrobot {
          * @brief
          * read single byte at a time.
          */
-        virtual uint8_t* read(void) = 0;
+        virtual uint8_t read(void) = 0;
     };
 }
 

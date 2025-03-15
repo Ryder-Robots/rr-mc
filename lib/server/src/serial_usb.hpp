@@ -45,7 +45,7 @@ namespace rrobot {
          * @brief
          * read data from the buffer and return the all data up to and including termination string.
          */
-        uint8_t* read(void) override;
+        uint8_t read(void) override;
 
         private:
         uint8_t _tm = 0x1E;

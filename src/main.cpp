@@ -24,11 +24,12 @@ void loop() {
         return;
     }
 
+    //TODO: This needs to fit into new format described in readme.
     if (serialUsb.available()) {
-        uint8_t* ingres = serialUsb.read();
-        RrController* encoder = ctl.retrieveEncoder(ingres);
+        //uint8_t* ingres = serialUsb.read();
+        RrController* encoder = ctl.retrieveEncoder(RrCommand::MSP_STATUS);
 
-        serialUsb.write(encoder->execute(ingres), encoder->encoder()->getSize());
+        // serialUsb.write(encoder->execute(ingres), encoder->encoder()->getSize());
         serialUsb.flush();
     }
 }
