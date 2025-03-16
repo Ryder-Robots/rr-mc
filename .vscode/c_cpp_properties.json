@@ -11,7 +11,11 @@
                 "/Users/newuser/Projects/rr-mc/include",
                 "/Users/newuser/Projects/rr-mc/src",
                 "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/ArduinoFake/src",
+                "/Users/newuser/Projects/rr-mc/lib/ble/include",
+                "/Users/newuser/Projects/rr-mc/lib/ble",
                 "/Users/newuser/Projects/rr-mc/lib/include",
+                "/Users/newuser/Projects/rr-mc/lib/server/include",
+                "/Users/newuser/Projects/rr-mc/lib/server/src",
                 "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/Unity/src",
                 ""
             ],
@@ -21,7 +25,11 @@
                     "/Users/newuser/Projects/rr-mc/include",
                     "/Users/newuser/Projects/rr-mc/src",
                     "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/ArduinoFake/src",
+                    "/Users/newuser/Projects/rr-mc/lib/ble/include",
+                    "/Users/newuser/Projects/rr-mc/lib/ble",
                     "/Users/newuser/Projects/rr-mc/lib/include",
+                    "/Users/newuser/Projects/rr-mc/lib/server/include",
+                    "/Users/newuser/Projects/rr-mc/lib/server/src",
                     "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/Unity/src",
                     ""
                 ]
