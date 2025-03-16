@@ -1,0 +1,43 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "/Users/newuser/Projects/rr-mc/include",
+                "/Users/newuser/Projects/rr-mc/src",
+                "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/ArduinoFake/src",
+                "/Users/newuser/Projects/rr-mc/lib/include",
+                "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/Unity/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/Users/newuser/Projects/rr-mc/include",
+                    "/Users/newuser/Projects/rr-mc/src",
+                    "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/ArduinoFake/src",
+                    "/Users/newuser/Projects/rr-mc/lib/include",
+                    "/Users/newuser/Projects/rr-mc/.pio/libdeps/native/Unity/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60118",
+                "NATIVE=1",
+                "SERIAL_BAUD=9600",
+                ""
+            ],
+            "cppStandard": "gnu++11",
+            "compilerPath": "/usr/bin/gcc",
+            "compilerArgs": [
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
