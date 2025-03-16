@@ -3,16 +3,10 @@
 #include <Arduino.h>
 #include <stdint.h>
 #include <rrcommands.hpp>
+#include <rrerror.hpp>
 
 
 namespace rrobot {
-    enum class RrError : uint8_t {
-        MSP_OK                = 0,
-        MSP_CMD_NOT_SUPPORTED = 1, // unsupported command 
-        MSP_SIZE_MISSMATCH    = 2, // size does match size of controller.
-        MSP_INVALID_DATA      = 3, // data is invalid
-    };
-
     enum class RrMspSensorFlags : uint16_t {
         BARO  =0b000000000000001,  // Barometer
         MAG   =0b000000000000010,  // Magnometer
