@@ -2,6 +2,7 @@
 #define RRHEADER_HPP
 #include <Arduino.h>
 #include <stdint.h>
+#include <rrcommands.hpp>
 
 
 namespace rrobot {
@@ -10,13 +11,6 @@ namespace rrobot {
         MSP_CMD_NOT_SUPPORTED = 1, // unsupported command 
         MSP_SIZE_MISSMATCH    = 2, // size does match size of controller.
         MSP_INVALID_DATA      = 3, // data is invalid
-    };
-
-    enum class RrCommand : uint8_t {
-        MSP_UNSUPPORTED = 0, // Not supported command (or incorrect)
-        MSP_STATUS = 104,
-        MSP_SENSOR = 216,
-        MSP_EXIT   = 217, // inbound command, to signify that processor should shutdown.
     };
 
     enum class RrMspSensorFlags : uint16_t {
