@@ -1,17 +1,39 @@
-#include <controller_msp_status.hpp>
+#include <ld002_controller_factory.hpp>
 
 using namespace rrobot;
 
-void* MspStatusController::run(void* request) {
-    MspStatus* status = new MspStatus();
+RrController* Ld001ControllerFactory::retrieveController(RrCommand command) {
+    switch (command) {
+        case RrCommand::MSP_STATUS:
+            return _statusController;
+            break;
+        case RrCommand::MSP_SENSOR:
+            return _sensorController;
+            break;
+        case RrCommand::MSP_EXIT:
+            return _shutdownController;
+            break;
+    }
 
-    status->set_cycletime(_cycletime);
-    status->set_i2c_errors_count(_i2c_errors_count);
-    status->set_sensor(_sensors);
-    status->set_flag(_flag);
-    status->set_current_set(_current_set);
-
-    return status;
+    // if encoder not found then status is a pretty safe bet.
+    return _statusController;
 }
 
-RrEncoder* MspStatusController::encoder() { return _encoder; }
+RrCommand Ld001ControllerFactory::retrieveCommand(uint8_t cmd) {
+    RrCommand result = RrCommand::MSP_UNSUPPORTED;
+    switch (static_cast<RrCommand>(cmd)) {
+        case RrCommand::MSP_STATUS:
+            result = RrCommand::MSP_STATUS;
+            break;
+        case RrCommand::MSP_SENSOR:
+            result = RrCommand::MSP_SENSOR;
+            break;
+        case RrCommand::MSP_EXIT:
+            result = RrCommand::MSP_EXIT;
+            break;
+
+        default:
+            RrCommand::MSP_UNSUPPORTED;
+    }
+    return result;
+}

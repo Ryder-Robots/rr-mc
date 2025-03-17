@@ -20,22 +20,15 @@ namespace rrobot {
  */
 class RrMultiWii {
    public:
-    RrMultiWii(RrEncoder* encoder, Crc32 crc32, AbstractMspFactory* mspFactory)
-        : _encoder(encoder), _crc32(crc32), _mspFactory(mspFactory) {}
+    RrMultiWii(Crc32 crc32, AbstractMspFactory* mspFactory)
+        :  _crc32(crc32), _mspFactory(mspFactory) {}
 
-    /**
-     * @fn getSize
-     * @brief
-     * return size of data in bytes
-     */
-    uint16_t getSize() { return _encoder->getSize(); }
 
-    void setup();
-    void tearDown();
-    void execute();
+    void setup(void);
+    void tearDown(void);
+    void execute(void);
 
    private:
-    RrEncoder* _encoder;
     const char _termination = 0x1E;
     Crc32 _crc32;
     AbstractMspFactory* _mspFactory;
