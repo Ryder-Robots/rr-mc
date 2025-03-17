@@ -62,10 +62,12 @@ void RrMultiWii::execute(void) {
         }
     }
 
-    uint8_t* result = reinterpret_cast<uint8_t*>(ctl->run(ctl->encoder()->decode(payload)));
+    uint8_t* result = reinterpret_cast<uint8_t*>(ctl->encoder()->encode(ctl->run(payload)));
     _serialUsb.write(static_cast<uint8_t>(ctl->encoder()->getCommand()));
-    _serialUsb.write(ctl->encoder()->getSize() >> 8 | 0xFF);
-    _serialUsb.write(ctl->encoder()->getSize());
+
+    sz = ctl->encoder()->getSize();
+    _serialUsb.write(highByte(sz));
+    _serialUsb.write(lowByte(sz));
 
     if (ctl->encoder()->getSize() > 0) {
         crc = _crc32.calculate(result, ctl->encoder()->getSize());
