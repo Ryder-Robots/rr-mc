@@ -20,8 +20,8 @@ namespace rrobot {
  */
 class RrMultiWii {
    public:
-    RrMultiWii(Crc32& crc32, AbstractUsbInterface& _serialUsb, AbstractMspFactory& mspFactory)
-        :  _crc32(crc32), _mspFactory(mspFactory), _serialUsb(_serialUsb) {}
+    RrMultiWii(Crc32& crc32, AbstractUsbInterface& serialUsb, AbstractMspFactory& mspFactory)
+        :  _crc32(crc32), _mspFactory(mspFactory), _serialUsb(serialUsb) {}
 
 
     void setup(void);

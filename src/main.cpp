@@ -4,20 +4,19 @@ using namespace rrobot;
 
 Crc32 crc;
 Ld001ControllerFactory fact = Ld001ControllerFactory();
-SerialUsb Serial;
-RrMultiWii* multiWii;
+SerialUsb serialUsb = SerialUsb();
+RrMultiWii multiWii = RrMultiWii(crc, serialUsb, fact);
 
 void setup() {
-    multiWii = new RrMultiWii(crc, Serial, fact);
-    multiWii->setup();
+    multiWii.setup();
 }
 
 void teardown() {
-    multiWii->tearDown();
+    multiWii.tearDown();
 }
 
 void loop() {
-    multiWii->execute();
+    multiWii.execute();
 }
 
 #ifdef NATIVE
