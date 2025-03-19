@@ -33,7 +33,7 @@ RrCommand Ld001ControllerFactory::retrieveCommand(uint8_t cmd) {
             break;
 
         default:
-            RrCommand::MSP_UNSUPPORTED;
+            result = RrCommand::MSP_UNSUPPORTED;
     }
     return result;
 }
