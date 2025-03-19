@@ -2,6 +2,7 @@
 #define MAIN_HPP
 
 #include <Arduino.h>
-#define _ARDUINO_H_
+#include <multiwii.hpp>
+#include <ld002_controller_factory.hpp>
 
 #endif

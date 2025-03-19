@@ -1,10 +1,24 @@
 #include <main.hpp>
 
-void setup() {}
+using namespace rrobot;
 
-void teardown() {}
+Crc32 crc;
+Ld001ControllerFactory fact = Ld001ControllerFactory();
+SerialUsb Serial;
+RrMultiWii* multiWii;
 
-void loop() {}
+void setup() {
+    multiWii = new RrMultiWii(crc, Serial, fact);
+    multiWii->setup();
+}
+
+void teardown() {
+    multiWii->tearDown();
+}
+
+void loop() {
+    multiWii->execute();
+}
 
 #ifdef NATIVE
 /**
