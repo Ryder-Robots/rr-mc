@@ -8,30 +8,40 @@
 using namespace rrobot;
 using namespace fakeit;
 
+Mock<AbstractUsbInterface> mock;
+std::vector<uint8_t> capturedOutput;
+
 void setUp(void) {
     // set stuff up here
+    When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
+    When(Method(mock, available)).AlwaysReturn(1);
 }
 
 void tearDown(void) {
     // clean stuff up here
 }
 
-#ifndef DISABLE_STATUS_TEST
+
 #ifdef NATIVE
 void test_should_return_status(void) {
-    std::vector<uint8_t> capturedOutput;
-    When(OverloadedMethod(ArduinoFake(Serial), write, size_t(uint8_t))).Return(1);
-    When(Method(ArduinoFake(Serial), read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
-    When(Method(ArduinoFake(Serial), available)).AlwaysReturn(1);
 
-    RrMultiWii multiWii = RrMultiWii(Crc32(), new Ld001ControllerFactory());
+
+    When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
+        [](uint8_t c) {
+            capturedOutput.push_back(c);
+            return 1;
+        }
+    );
+
+    Crc32 crc;
+    Ld001ControllerFactory fact = Ld001ControllerFactory();
+    RrMultiWii multiWii = RrMultiWii(crc, mock.get(), fact);
     multiWii.execute();
 
-    uint8_t c = capturedOutput.front();
-    TEST_ASSERT_EQUAL_UINT8(0x68, c);
+    TEST_ASSERT_EQUAL_UINT8(0x68, capturedOutput.at(0));
+    TEST_ASSERT_EQUAL_UINT16((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), highByte(capturedOutput.at(1)) | capturedOutput.at(2));
     
 }
-#endif
 #else
 void test_should_return_status(void) {}
 #endif

@@ -21,7 +21,7 @@ void RrMultiWii::execute(void) {
     }
 
     // Get command
-    RrCommand cmd = _mspFactory->retrieveCommand(_serialUsb.read());
+    RrCommand cmd = _mspFactory.retrieveCommand(_serialUsb.read());
     if (cmd == RrCommand::MSP_UNSUPPORTED) {
         _hasError = true;
         _error = RrError::MSP_CMD_NOT_SUPPORTED;
@@ -29,7 +29,7 @@ void RrMultiWii::execute(void) {
     }
 
     // Get Controller
-    RrController* ctl = _mspFactory->retrieveController(cmd);
+    RrController* ctl = _mspFactory.retrieveController(cmd);
 
     // get size
     uint16_t sz = _serialUsb.read() << 8 | _serialUsb.read();
@@ -88,6 +88,6 @@ void RrMultiWii::execute(void) {
     _serialUsb.write(_termination);
 }
 
-void RrMultiWii::setup() { _mspFactory->setUp(); }
+void RrMultiWii::setup() { _mspFactory.setUp(); }
 
-void RrMultiWii::tearDown() { _mspFactory->tearDown(); }
+void RrMultiWii::tearDown() { _mspFactory.tearDown(); }

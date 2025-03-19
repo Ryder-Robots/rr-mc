@@ -20,8 +20,8 @@ namespace rrobot {
  */
 class RrMultiWii {
    public:
-    RrMultiWii(Crc32 crc32, AbstractMspFactory* mspFactory)
-        :  _crc32(crc32), _mspFactory(mspFactory) {}
+    RrMultiWii(Crc32& crc32, AbstractUsbInterface& _serialUsb, AbstractMspFactory& mspFactory)
+        :  _crc32(crc32), _mspFactory(mspFactory), _serialUsb(_serialUsb) {}
 
 
     void setup(void);
@@ -30,9 +30,9 @@ class RrMultiWii {
 
    private:
     const char _termination = 0x1E;
-    Crc32 _crc32;
-    AbstractMspFactory* _mspFactory;
-    SerialUsb _serialUsb = SerialUsb();
+    Crc32& _crc32;
+    AbstractMspFactory& _mspFactory;
+    AbstractUsbInterface& _serialUsb;
     bool _hasError = false;
     RrError _error = RrError::MSP_OK;
 

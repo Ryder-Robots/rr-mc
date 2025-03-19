@@ -10,6 +10,7 @@ namespace rrobot {
  * Connects to USB interface
  */
 class AbstractUsbInterface {
+    public:
     /**
      * given board rate start communication, note that for UART this MUST be overridden at pin
      * position will need to be defined. Override is required for GPS communication with UART chip.
