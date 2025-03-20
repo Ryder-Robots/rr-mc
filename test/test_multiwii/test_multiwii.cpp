@@ -16,6 +16,7 @@ void setUp(void) {
     When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(Method(mock, available)).AlwaysReturn(1);
     When(Method(mock, begin).Using(9600)).Return();
+    When(Method(mock, flush)).Return();
 }
 
 void tearDown(void) {
