@@ -7,6 +7,15 @@
         "vector": "cpp",
         "ostream": "cpp",
         "print": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "set": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp"
     }
 }

@@ -13,6 +13,8 @@ RrController* Ld001ControllerFactory::retrieveController(RrCommand command) {
         case RrCommand::MSP_EXIT:
             return _shutdownController;
             break;
+
+        // TODO: Need to send back error here for MSP_UNSUPPORTED
     }
 
     // if encoder not found then status is a pretty safe bet.

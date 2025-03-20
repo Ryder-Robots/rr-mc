@@ -15,7 +15,14 @@ class SerialUsb : public AbstractUsbInterface {
      * @brief
      * initlize communication, this should be done during setup() phase of main program.
      */
-    void begin(unsigned long baud) override;
+#ifdef NATIVE
+    void begin(unsigned long baud) override {}
+#else
+    void begin(unsigned long baud) override {
+        Serial.begin(baud);
+        while (!Serial);
+    }
+#endif
 
     /**
      * @fn write
@@ -47,6 +54,7 @@ class SerialUsb : public AbstractUsbInterface {
     uint8_t read(void) override;
 
    private:
+
     uint8_t _tm = 0x1E;
     size_t _mxbuf = sizeof(uint8_t) * 512;
 };

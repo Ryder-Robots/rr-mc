@@ -22,13 +22,12 @@ void RrMultiWii::execute(void) {
     while (_serialUsb.available() == 0) {
     }
 
+    int i = 0;
     uint8_t c = _serialUsb.read();
     RrCommand cmd = _mspFactory.retrieveCommand(c);
     if (cmd == RrCommand::MSP_UNSUPPORTED) {
         _hasError = true;
         _error = RrError::MSP_CMD_NOT_SUPPORTED;
-
-        int i = 0;
         while(c != _termination) {
             if (i >= MAX_USB_BF) {
                 break;
@@ -70,6 +69,15 @@ void RrMultiWii::execute(void) {
                 _error = RrError::MSP_INVALID_DATA;
             }
         }
+    }
+
+    // iterate to termination,  should be the next 
+    while(c != _termination) {
+        if (i >= MAX_USB_BF) {
+            break;
+        }
+        c = _serialUsb.read();
+        i++;
     }
 
     if (_hasError) {
