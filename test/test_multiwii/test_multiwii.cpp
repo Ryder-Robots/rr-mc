@@ -13,7 +13,6 @@ std::vector<uint8_t> capturedOutput;
 
 void setUp(void) {
     // set stuff up here
-    When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(Method(mock, available)).AlwaysReturn(1);
     When(Method(mock, begin).Using(9600)).Return();
     When(Method(mock, flush)).Return();
@@ -26,8 +25,7 @@ void tearDown(void) {
 
 #ifdef NATIVE
 void test_should_return_status(void) {
-
-
+    When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
         [](uint8_t c) {
             capturedOutput.push_back(c);
@@ -44,14 +42,35 @@ void test_should_return_status(void) {
     TEST_ASSERT_EQUAL_UINT16((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), highByte(capturedOutput.at(1)) | capturedOutput.at(2));
     
 }
+
+void test_should_return_sensor(void) {
+    When(Method(mock, read)).Return(0xD8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
+    When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
+        [](uint8_t c) {
+            capturedOutput.push_back(c);
+            return 1;
+        }
+    );
+
+    Crc32 crc;
+    Ld001ControllerFactory fact = Ld001ControllerFactory();
+    RrMultiWii multiWii = RrMultiWii(crc, mock.get(), fact);
+    multiWii.execute();
+
+    TEST_ASSERT_EQUAL_UINT8(0xD8, capturedOutput.at(0));
+    // TEST_ASSERT_EQUAL_UINT16((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), highByte(capturedOutput.at(1)) | capturedOutput.at(2));
+    
+}
 #else
 void test_should_return_status(void) {}
+void test_should_return_sensor(void) {}
 #endif
 
 
 int runUnityTests(void) {
     UNITY_BEGIN();
     RUN_TEST(test_should_return_status);
+    RUN_TEST(test_should_return_sensor);
     return UNITY_END();
 }
 
