@@ -8,14 +8,19 @@ SerialUsb serialUsb = SerialUsb();
 RrMultiWii multiWii = RrMultiWii(crc, serialUsb, fact);
 
 void setup() {
-    serialUsb.begin(9600);
+    serialUsb.begin(SERIAL_BAUD);
     multiWii.setup();
 }
 
+/**
+ * @fn teardown
+ * @brief
+ * teardown process by using teardown method
+ */
 void teardown() { multiWii.tearDown(); }
 
 void loop() {
-    delay(500);
+    delay(MAIN_LOOP_DELAY);
     multiWii.execute();    
 }
 

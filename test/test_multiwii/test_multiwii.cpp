@@ -25,6 +25,7 @@ void tearDown(void) {
 
 #ifdef NATIVE
 void test_should_return_status(void) {
+    capturedOutput.clear();
     When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
         [](uint8_t c) {
@@ -44,6 +45,7 @@ void test_should_return_status(void) {
 }
 
 void test_should_return_sensor(void) {
+    capturedOutput.clear();
     When(Method(mock, read)).Return(0xD8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
         [](uint8_t c) {

@@ -11,6 +11,18 @@ class Ld001ControllerFactory : public AbstractMspFactory {
    public:
     RrController* retrieveController(RrCommand command) override;
     RrCommand retrieveCommand(uint8_t cmd) override;
+    
+    /**
+     * @fn tearDown
+     * @brief
+     * calls delete on objects that are referenced,  Note that one the power is cut, this should 
+     * reset anyway,  but better to be safe than sorry.
+     */
+    void tearDown() override {
+        delete(_statusController);
+        delete(_sensorController);
+        delete(_shutdownController);
+    }
 
    private:
     MspStatusController* _statusController = new MspStatusController();
