@@ -8,7 +8,7 @@ using namespace fakeit;
 
 void test_serial_read() {
    
-    When(Method(ArduinoFake(Serial), read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
+    When(Method(ArduinoFake(Serial), read)).Return(101, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(Method(ArduinoFake(Serial), available)).Return(1);
     
     SerialUsb serialUsb = SerialUsb();

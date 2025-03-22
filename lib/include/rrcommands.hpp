@@ -7,7 +7,7 @@ namespace rrobot {
 
 enum class RrCommand : uint8_t {
     MSP_UNSUPPORTED = 1,  // Not supported command (or incorrect)
-    MSP_STATUS = 104,
+    MSP_STATUS = 101,
     MSP_SENSOR = 216,
     MSP_EXIT = 217,  // inbound command, to signify that processor should shutdown.
 };

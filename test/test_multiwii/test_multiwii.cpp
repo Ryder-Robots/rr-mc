@@ -26,7 +26,7 @@ void tearDown(void) {
 #ifdef NATIVE
 void test_should_return_status(void) {
     capturedOutput.clear();
-    When(Method(mock, read)).Return(0x68, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
+    When(Method(mock, read)).Return(101, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E);
     When(OverloadedMethod(mock, write, size_t(u_int8_t))).AlwaysDo(
         [](uint8_t c) {
             capturedOutput.push_back(c);
@@ -39,7 +39,7 @@ void test_should_return_status(void) {
     RrMultiWii multiWii = RrMultiWii(crc, mock.get(), fact);
     multiWii.execute();
 
-    TEST_ASSERT_EQUAL_UINT8(0x68, capturedOutput.at(0));
+    TEST_ASSERT_EQUAL_UINT8(101, capturedOutput.at(0));
     TEST_ASSERT_EQUAL_UINT16((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), highByte(capturedOutput.at(1)) | capturedOutput.at(2));
     
 }
@@ -59,7 +59,7 @@ void test_should_return_sensor(void) {
     RrMultiWii multiWii = RrMultiWii(crc, mock.get(), fact);
     multiWii.execute();
 
-    TEST_ASSERT_EQUAL_UINT8(0xD8, capturedOutput.at(0));
+    TEST_ASSERT_EQUAL_UINT8(216, capturedOutput.at(0));
     // TEST_ASSERT_EQUAL_UINT16((sizeof(uint16_t) * 3) + sizeof(uint32_t) + sizeof(uint8_t), highByte(capturedOutput.at(1)) | capturedOutput.at(2));
     
 }
