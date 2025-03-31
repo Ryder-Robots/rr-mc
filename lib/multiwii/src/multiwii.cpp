@@ -112,6 +112,11 @@ void RrMultiWii::execute(void) {
     }
     _serialUsb.write(_termination);
     _serialUsb.flush();
+
+    if (payload != nullptr)
+        free(payload);
+    if (result != nullptr)
+        free(result);
 }
 
 void RrMultiWii::setup() { _mspFactory.setUp(); }

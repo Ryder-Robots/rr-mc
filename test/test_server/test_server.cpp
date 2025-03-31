@@ -29,7 +29,7 @@ void test_serial_read() {
     TEST_ASSERT_EQUAL_UINT32(0, (data[3] << 24) | (data[4] << 16) | (data[5] << 8) | data[6]);
     // Termination char
     TEST_ASSERT_EQUAL_UINT8(0x01E, data[7]);
-
+    free(data);
 }
 
 void setUp(void) {
